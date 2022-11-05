@@ -21,13 +21,14 @@ public class ProducerConsumerDemo {
                     if(!produced) {
                         number = new Random().nextInt();
                         produced= true;
+                        consumed = false;
                         notifyAll(); // it sends signal to the waiting thread
                     }
                     System.out.println(ThreadColor.ANSI_PURPLE + "Producer has generated the number " + number);
                     if(!consumed){
                         try {
                             wait(); // putting thread into the sleep mode, waiting for external signal
-                            consumed = false;
+
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -39,7 +40,7 @@ public class ProducerConsumerDemo {
                 for (int i = 0; i < 10; i++) {
                     if(!produced){
                         try {
-                            wait(10000); // timed wait
+                            wait(); // infinite wait - blocked
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -52,7 +53,7 @@ public class ProducerConsumerDemo {
                             System.out.println(ThreadColor.ANSI_CYAN + "No. is odd");
                         }
                         System.out.println(ThreadColor.ANSI_CYAN + "No. is consumed");
-                        notify();
+                        notifyAll();
                         produced = false;
                         consumed = true;
                     }
