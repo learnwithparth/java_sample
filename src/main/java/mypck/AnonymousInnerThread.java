@@ -1,3 +1,5 @@
+package mypck;
+
 public class AnonymousInnerThread {
     public static void main(String[] args) {
 
